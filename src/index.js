@@ -2,12 +2,14 @@
  * es6 modules and imports
  */
 import sayHello from './hello';
-sayHello('World');
+import { getMovies } from './api.js';
+
 
 /**
  * require style imports
  */
-const {getMovies} = require('./api.js');
+sayHello('World');
+
 
 getMovies().then((movies) => {
   console.log('Here are all the movies:');
