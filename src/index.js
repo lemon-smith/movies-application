@@ -1,22 +1,45 @@
-/**
- * es6 modules and imports
- */
-import sayHello from './hello';
+// Es6 Imports
+import {load, formBtn} from './hello';
 import { getMovies } from './api.js';
 
 
-/**
- * require style imports
- */
-sayHello('World');
+// Global variables
 
+
+
+// Shits Going Down!
+load.innerHTML = "Loading...";
 
 getMovies().then((movies) => {
-  console.log('Here are all the movies:');
+  let x = [];
   movies.forEach(({title, rating, id}) => {
-    console.log(`id#${id} - ${title} - rating: ${rating}`);
-  });
+    x.push(`${id} ${title} ${rating}`);
+  }); //forEach()
+  load.innerHTML = x;
 }).catch((error) => {
-  alert('Oh no! Something went wrong.\nCheck the console for details.')
+  alert('Oh no! Something went wrong.\nCheck the console for details.');
   console.log(error);
 });
+
+
+
+// button
+// formBtn.addEventListener('click', function (e) {
+//   e.preventDefault();
+// });
+
+
+// adding a movie
+// const blogPost = {title: 'Ajax Requests', body: 'Are a fun way to use JS!'};
+// const url = '/posts';
+// const options = {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+//   body: JSON.stringify(blogPost),
+// };
+// fetch(url, options)
+//     .then(/* post was created successfully */)
+//     .catch(/* handle errors */);
+
