@@ -5,29 +5,34 @@ import { getMovies } from './api.js';
 
 // Global variables
 
-
+document.getElementById('edit-btn').addEventListener('click', function() {
+  document.getElementById('edit-me').setAttribute('contenteditable', 'true');
+});
 
 // Going Down!
+
 
 getMovies().then((movies) => {
   let x = [];
   movies.forEach(({title, rating, id}) => {
     x.push(`
+        
+        
 
-        <h4>Movie Title: ${title}</h4>
-        <p>Movie Rating: ${rating}</p>
+        <h4>Movie Title: <span class="edit">${title}</span></h4>
+        <p>Movie Rating: <span class="edit">${rating}</span></p>
+        <button type='submit' id="edit-btn">Edit</button>
     
-    
+       
     
     `);
   }); //forEach()
   load.innerHTML = x;
+}).then(() => {
 }).catch((error) => {
   alert('Oh no! Something went wrong.\nCheck the console for details.');
   console.log(error);
 });
-
-
 
 formBtn.addEventListener('click', function (e) {
   e.preventDefault();
