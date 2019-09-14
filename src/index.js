@@ -8,31 +8,8 @@ updateMovies();
 function updateMovies() {
   getMoviesProm().then(movie => {
     load.innerHTML = listOfMovies(movie);
-  }).then(() => {
-
-
-
-    let inputElements = document.querySelectorAll('button');
-
-
-    for (var i = 0; i < inputElements.length; i++) {
-      inputElements[i].addEventListener('click', function() {
-
-        console.log(this.parentNode);
-
-
-        this.parentNode.insertAdjacentHTML('afterend', '<button type="submit">Done</button>');
-
-
-        this.parentNode.setAttribute('contenteditable', 'true');
-
-
-      });
-    }
-
-
-
-  }).catch((error) => {
+  }).then(() => editButton()
+  ).catch((error) => {
     alert('Oh no! Something went wrong.\nCheck the console for details.');
     console.log(error);
   });
@@ -41,8 +18,20 @@ function updateMovies() {
 
 // Sub functions
 function listOfMovies(movie) {
-  const mov = movie.map(mov => `<li><strong>Movie:</strong> ${mov.title}<br><strong>Rating:</strong> ${mov.rating} <button type="submit" class="edit-btn">Edit</button></li>`).join("\n");
+  const mov = movie.map(mov => `<li><strong>Movie:</strong> <span>${mov.title}</span><br><strong>Rating:</strong> <span>${mov.rating}</span> <button type="submit" class="edit-btn">Edit</button> <button type="submit" class="done-btn">Done</button></li>`).join("\n");
   return `<ul>${mov}</ul>`
+}
+
+
+
+function editButton() {
+  let inputElements = document.querySelectorAll('button');
+  for (let i = 0; i < inputElements.length; i++) {
+    inputElements[i].addEventListener('click', function() {
+      this.parentNode.querySelector('span').setAttribute('contenteditable', 'true');
+      this.nextElementSibling.style.display = 'inline-block';
+    });
+  }
 }
 
 
