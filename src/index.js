@@ -7,6 +7,7 @@ import { getMoviesProm } from './api.js';
 updateMovies();
 function updateMovies() {
   getMoviesProm().then(movie => {
+
     load.innerHTML = listOfMovies(movie);
   }).then(() => {
 
@@ -77,6 +78,7 @@ function postMovie() {
 }
 
 //Edit
+
 
 // document.querySelector('.edit-btn').addEventListener('click', function(e) {
 //   e.preventDefault();
