@@ -25,7 +25,7 @@ function listOfMovies(movie) {
 
 
 function editButton() {
-  let inputElements = document.querySelectorAll('button');
+  let inputElements = document.querySelectorAll('.edit-btn');
   for (let i = 0; i < inputElements.length; i++) {
     inputElements[i].addEventListener('click', function() {
       this.parentNode.querySelector('span').setAttribute('contenteditable', 'true');
