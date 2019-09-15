@@ -9,8 +9,8 @@ function updateMovies() {
   getMoviesProm().then(movie => {
     // console.log(movie);
     load.innerHTML = listOfMovies(movie);
-    editButton(movie);
-    doneButton(movie)
+    editButton();
+    doneButton(movie[0].id);
   }).catch((error) => {
     alert('Oh no! Something went wrong.\nCheck the console for details.');
     console.log(error);
@@ -26,11 +26,10 @@ function listOfMovies(movie) {
 
 // NEW EDIT BUTTON
 
-function editButton(movie) {
+function editButton() {
   $('.edit-btn').click(function() {
     $(this).parent().children('span').attr('contenteditable', 'true');
     $('.done-btn').css('display', 'inline-block');
-    console.log(movie[0].id);
   })
 }
 
@@ -48,20 +47,20 @@ function editButton(movie) {
 //   }
 // }
 
-function doneButton(movie) {
+function doneButton(id) {
+  console.log(id);
   $('.done-btn').click(function() {
     let movieTitle = $(this).parent().children('.movie-title').text();
-    console.log(movieTitle);
+
     let movieRating = $(this).parent().children('.movie-rating').text();
     let newMovie = {
       title: movieTitle,
       rating: movieRating
     };
-    console.log(newMovie);
-    let casablanca = movie[0].id;
-    console.log(casablanca);
 
-    const url = `/api/movies/{${casablanca}}`;
+
+
+    const url = `/api/movies/${id}`;
     const options = {
       method: 'PUT',
       headers: {
