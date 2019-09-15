@@ -18,21 +18,32 @@ function updateMovies() {
 
 // Sub functions
 function listOfMovies(movie) {
-  const mov = movie.map(mov => `<li><strong>Movie:</strong> <span>${mov.title}</span><br><strong>Rating:</strong> <span>${mov.rating}</span> <button type="submit" class="edit-btn">Edit</button> <button type="submit" class="done-btn">Done</button></li>`).join("\n");
+  const mov = movie.map(mov => `<li><strong>Movie:</strong> <span class="movie-title editable">${mov.title}</span><br><strong>Rating:</strong> <span class="movie-rating editable">${mov.rating}</span> <button type="submit" class="edit-btn">Edit</button> <button type="submit" class="done-btn">Done</button></li>`).join("\n");
   return `<ul>${mov}</ul>`
 }
 
 
-
 function editButton() {
-  let inputElements = document.querySelectorAll('.edit-btn');
-  for (let i = 0; i < inputElements.length; i++) {
-    inputElements[i].addEventListener('click', function() {
-      this.parentNode.querySelector('span').setAttribute('contenteditable', 'true');
-      this.nextElementSibling.style.display = 'inline-block';
-    });
-  }
+  $('.edit-btn').click(function() {
+    $(this).parent().children('span').attr('contenteditable', 'true');
+    $('.done-btn').css('display', 'inline-block');
+  })
 }
+
+
+
+
+// function editButton() {
+//   let inputElements = document.querySelectorAll('.edit-btn');
+//   for (let i = 0; i < inputElements.length; i++) {
+//     inputElements[i].addEventListener('click', function() {
+//       // this.setAttribute('contenteditable', 'true');
+//       // this.nextElementSibling.style.display = 'inline-block';
+//       console.log(this.next);
+//       $('.editable').css('contenteditable', 'true');
+//     });
+//   }
+// }
 
 
 
