@@ -10,7 +10,7 @@ function updateMovies() {
     // console.log(movie);
     load.innerHTML = listOfMovies(movie);
     editButton();
-    doneButton(movie[0].id);
+    doneButton(movie);
   }).catch((error) => {
     alert('Oh no! Something went wrong.\nCheck the console for details.');
     console.log(error);
@@ -47,10 +47,11 @@ function editButton() {
 //   }
 // }
 
-function doneButton(id) {
-  console.log(id);
+function doneButton(movie) {
+  console.log(movie);
   $('.done-btn').click(function() {
     let movieTitle = $(this).parent().children('.movie-title').text();
+    console.log(movieTitle);
 
     let movieRating = $(this).parent().children('.movie-rating').text();
     let newMovie = {
@@ -58,9 +59,9 @@ function doneButton(id) {
       rating: movieRating
     };
 
+    console.log(movie[i].id);
 
-
-    const url = `/api/movies/${id}`;
+    const url = `/api/movies/${movie[1].id}`;
     const options = {
       method: 'PUT',
       headers: {
@@ -105,12 +106,3 @@ function postMovie() {
       .catch(/* handle errors */);
 }
 
-//Edit
-
-// document.querySelector('.edit-btn').addEventListener('click', function(e) {
-//   e.preventDefault();
-//
-//
-//   document.querySelector('li').setAttribute('contenteditable', 'true');
-//
-// });
