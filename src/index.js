@@ -7,9 +7,11 @@ import { getMoviesProm } from './api.js';
 updateMovies();
 function updateMovies() {
   getMoviesProm().then(movie => {
+    // console.log(movie);
     load.innerHTML = listOfMovies(movie);
-  }).then(() => editButton()
-  ).catch((error) => {
+    editButton(movie);
+    doneButton(movie)
+  }).catch((error) => {
     alert('Oh no! Something went wrong.\nCheck the console for details.');
     console.log(error);
   });
@@ -22,16 +24,17 @@ function listOfMovies(movie) {
   return `<ul>${mov}</ul>`
 }
 
+// NEW EDIT BUTTON
 
-function editButton() {
+function editButton(movie) {
   $('.edit-btn').click(function() {
     $(this).parent().children('span').attr('contenteditable', 'true');
     $('.done-btn').css('display', 'inline-block');
+    console.log(movie[0].id);
   })
 }
 
-
-
+//OLD EDIT BUTTON
 
 // function editButton() {
 //   let inputElements = document.querySelectorAll('.edit-btn');
@@ -44,6 +47,33 @@ function editButton() {
 //     });
 //   }
 // }
+
+function doneButton(movie) {
+  $('.done-btn').click(function() {
+    let movieTitle = $(this).parent().children('.movie-title').text();
+    console.log(movieTitle);
+    let movieRating = $(this).parent().children('.movie-rating').text();
+    let newMovie = {
+      title: movieTitle,
+      rating: movieRating
+    };
+    console.log(newMovie);
+    let casablanca = movie[0].id;
+    console.log(casablanca);
+
+    const url = `/api/movies/{${casablanca}}`;
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newMovie),
+    };
+    fetch(url, options)
+        .then(/* post was created successfully */)
+        .catch(/* handle errors */);
+  })
+}
 
 
 
