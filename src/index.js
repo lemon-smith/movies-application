@@ -10,7 +10,8 @@ function updateMovies() {
     // console.log(movie);
     load.innerHTML = listOfMovies(movie);
     editButton();
-    doneButton(movie);
+    doneButton();
+    deleteButton();
   }).catch((error) => {
     alert('Oh no! Something went wrong.\nCheck the console for details.');
     console.log(error);
@@ -20,7 +21,7 @@ function updateMovies() {
 
 // Sub functions
 function listOfMovies(movie) {
-  const mov = movie.map(mov => `<li><strong>Movie:</strong> <span class="movie-title editable">${mov.title}</span><br><strong>Rating:</strong> <span class="movie-rating editable">${mov.rating}</span> <button type="submit" class="edit-btn">Edit</button> <button type="submit" class="done-btn">Done</button></li>`).join("\n");
+  const mov = movie.map(mov => `<li><strong>Movie:</strong> <span class="movie-title editable">${mov.title}</span><br><strong>Rating:</strong> <span class="movie-rating editable">${mov.rating}</span><br><strong>ID:</strong> <span class="movie-id">${mov.id}</span> <button type="submit" class="edit-btn">Edit</button> <button type="submit" class="done-btn">Done</button><button type="submit" class="delete-btn">Delete</button></li>`).join("\n");
   return `<ul>${mov}</ul>`
 }
 
@@ -47,21 +48,20 @@ function editButton() {
 //   }
 // }
 
-function doneButton(movie) {
-  console.log(movie);
+function doneButton() {
   $('.done-btn').click(function() {
     let movieTitle = $(this).parent().children('.movie-title').text();
-    console.log(movieTitle);
 
     let movieRating = $(this).parent().children('.movie-rating').text();
-    let newMovie = {
+    let movieId = $(this).parent().children('.movie-id').text();
+    const newMovie = {
       title: movieTitle,
-      rating: movieRating
+      rating: movieRating,
+      id: movieId
     };
 
-    console.log(movie[i].id);
 
-    const url = `/api/movies/${movie[1].id}`;
+    const url = `/api/movies/${movieId}`;
     const options = {
       method: 'PUT',
       headers: {
@@ -73,6 +73,25 @@ function doneButton(movie) {
         .then(/* post was created successfully */)
         .catch(/* handle errors */);
   })
+}
+
+
+function deleteButton() {
+  $('.delete-btn').click(function() {
+    let movieId = $(this).parent().children('.movie-id').text();
+
+    const url = `/api/movies/${movieId}`;
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    fetch(url, options)
+        .then()
+        .catch(/* handle errors */);
+  })
+
 }
 
 
@@ -91,7 +110,8 @@ function postMovie() {
   let movieRating = document.querySelector('input[name="movieRating"]:checked').value;
   let newMovie = {
     title: movieTitle,
-    rating: movieRating
+    rating: movieRating,
+
   };
   const url = '/api/movies';
   const options = {
@@ -105,4 +125,3 @@ function postMovie() {
       .then(/* post was created successfully */)
       .catch(/* handle errors */);
 }
-
