@@ -1,19 +1,9 @@
 {
   "movies": [
     {
-      "title": "Hope",
+      "title": "sae",
       "rating": "2",
-      "id": 1
-    },
-    {
-      "title": "Star Wars: A New Hope",
-      "rating": "5",
       "id": 2
-    },
-    {
-      "title": "caStar Wars: A New Hope",
-      "rating": "",
-      "id": 3
     }
   ]
 }
