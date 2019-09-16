@@ -1,13 +1,14 @@
 // Es6 Imports
+
 import {load, formBtn} from './hello';
 import { getMoviesProm } from './api.js';
 
 
 // Fetch
+
 updateMovies();
 function updateMovies() {
   getMoviesProm().then(movie => {
-    // console.log(movie);
     load.innerHTML = listOfMovies(movie);
     editButton();
     doneButton();
@@ -20,40 +21,50 @@ function updateMovies() {
 
 
 // Sub functions
+
 function listOfMovies(movie) {
-  const mov = movie.map(mov => `<li><strong>Movie:</strong> <span class="movie-title editable">${mov.title}</span><br><strong>Rating:</strong> <span class="movie-rating editable">${mov.rating}</span><br><strong>ID:</strong> <span class="movie-id">${mov.id}</span> <button type="submit" class="edit-btn">Edit</button> <button type="submit" class="done-btn">Done</button><button type="submit" class="delete-btn">Delete</button></li>`).join("\n");
+  const mov = movie.map(mov => `
+<li>
+    <h4>Movie:</h4> 
+    <p class="movie-title editable">${mov.title}</p>
+    
+    <br>
+    
+    <h4>Rating</h4>
+    <p class="text-center movie-rating editable">${mov.rating}</p>
+    
+    <br>
+    
+    <strong>ID:</strong>
+    <p class="movie-id">${mov.id}</p>
+    
+    <button type="submit" class="edit-btn">Edit</button>
+    
+    <button type="submit" class="done-btn">Done</button>
+    
+    <button type="submit" class="delete-btn">Delete</button>
+    
+</li>`).join("\n");
   return `<ul>${mov}</ul>`
 }
 
-// NEW EDIT BUTTON
+// EDIT BUTTON
 
 function editButton() {
   $('.edit-btn').click(function() {
-    $(this).parent().children('span').attr('contenteditable', 'true');
-    $('.done-btn').css('display', 'inline-block');
+    $(this).parent().children('.editable').attr('contenteditable', 'true');
+    $(this).parent().children('.done-btn').css('display', 'inline-block');
   })
 }
 
-//OLD EDIT BUTTON
-
-// function editButton() {
-//   let inputElements = document.querySelectorAll('.edit-btn');
-//   for (let i = 0; i < inputElements.length; i++) {
-//     inputElements[i].addEventListener('click', function() {
-//       // this.setAttribute('contenteditable', 'true');
-//       // this.nextElementSibling.style.display = 'inline-block';
-//       console.log(this.next);
-//       $('.editable').css('contenteditable', 'true');
-//     });
-//   }
-// }
+// DONE BUTTON
 
 function doneButton() {
   $('.done-btn').click(function() {
     let movieTitle = $(this).parent().children('.movie-title').text();
-
     let movieRating = $(this).parent().children('.movie-rating').text();
     let movieId = $(this).parent().children('.movie-id').text();
+
     const newMovie = {
       title: movieTitle,
       rating: movieRating,
@@ -72,9 +83,12 @@ function doneButton() {
     fetch(url, options)
         .then(/* post was created successfully */)
         .catch(/* handle errors */);
+    $(this).parent().children('.done-btn').hide();
   })
+
 }
 
+// DELETE BUTTON
 
 function deleteButton() {
   $('.delete-btn').click(function() {
@@ -94,16 +108,7 @@ function deleteButton() {
 
 }
 
-
-
-// Events
-formBtn.addEventListener('click', function (e) {
-  e.preventDefault();
-  postMovie();
-  updateMovies();
-});
-
-
+//POST MOVIE TO DATABASE
 
 function postMovie() {
   let movieTitle = document.querySelector('.movieTitle').value;
@@ -125,3 +130,14 @@ function postMovie() {
       .then(/* post was created successfully */)
       .catch(/* handle errors */);
 }
+
+
+// Events
+formBtn.addEventListener('click', function (e) {
+  e.preventDefault();
+  postMovie();
+  updateMovies();
+});
+
+
+
