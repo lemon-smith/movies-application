@@ -104,8 +104,8 @@ function deleteButton() {
     fetch(url, options)
         .then()
         .catch(/* handle errors */);
-  });
-  updateMovies();
+  })
+
 }
 
 //POST MOVIE TO DATABASE
